@@ -17,7 +17,10 @@ public interface FamilyRepository extends JpaRepository<Family, Long> {
       value = """
           SELECT t.id, t.family_name, t.contact_email, t.contact_phone,
           t.number_of_adults, t.number_of_kids, h.address, h.city, h.state,
-          h.zip_code, h.location from tb_family t INNER JOIN tb_home h ON t.id = h.family_id
+          h.zip_code, h.location,  p.first_name, p.last_name, p.dob, p.email, p.calories
+          FROM tb_family t
+          INNER JOIN tb_home h ON t.id = h.family_id
+          INNER JOIN tb_person p ON h.family_id = p.family_id
           """
   )
   List<FamilyDataProjection> getFamilyData();

@@ -1,9 +1,20 @@
 package br.dev.ferreiras.pantry_provisioning.dto;
 
 
-public record FamilyDataDTO(Long id, String familyName, String contactEmail, String contactPhone,
-                            Integer numberOfAdults, Integer numberOfKids, String address, String city, String state,
-                            String zipCode, String location) {
+import br.dev.ferreiras.pantry_provisioning.entities.Person;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Positive;
+
+import java.util.List;
+
+public record FamilyDataDTO(Long id, @NotBlank(message = "Required") String familyName,
+                            @NotBlank(message = "Required") @NotBlank(message = "Required") String contactEmail,
+                            @NotBlank(message = "Required") String contactPhone,
+                            @NotBlank(message = "Required") @Positive(message = "Al least one adult!") Integer numberOfAdults,
+                            Integer numberOfKids, @NotBlank(message = "Required") String address,
+                            @NotBlank(message = "Required") String city, @NotBlank(message = "Required") String state,
+                            @NotBlank(message = "Required") String zipCode, String location,
+                            List<Person> people) {
 }
 
 

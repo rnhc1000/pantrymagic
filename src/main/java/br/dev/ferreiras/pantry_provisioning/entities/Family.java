@@ -6,6 +6,7 @@ import org.hibernate.annotations.SourceType;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import java.time.Instant;
+import java.util.List;
 import java.util.Objects;
 
 @Entity
@@ -35,6 +36,9 @@ public class Family {
 
   @UpdateTimestamp(source = SourceType.DB)
   private Instant updatedAt;
+
+  @OneToMany(mappedBy = "family")
+  private List<Person> persons;
 
   public Family() {
   }
@@ -103,6 +107,10 @@ public class Family {
 
   public void setHome(Home home) {
     this.home = home;
+  }
+
+  public List<Person> getPersons() {
+    return persons;
   }
 
   @Override

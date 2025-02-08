@@ -1,17 +1,22 @@
 package br.dev.ferreiras.pantry_provisioning.projections;
 
+import br.dev.ferreiras.pantry_provisioning.entities.Person;
+
+import java.time.LocalDate;
+import java.util.List;
+
 public interface FamilyDataProjection {
 
-  public Long getId();
-  public String getFamilyName();
-  public String getContactEmail();
-  public String getContactPhone();
-  public Integer getNumberOfAdults();
-  public Integer getNumberOfKids();
-  public String getAddress();
-  public String getCity();
-  public String getState();
-  public String getZipCode();
-  public String getLocation();
-
+  Long getId();
+  String getFamilyName();
+  String getContactEmail();
+  String getContactPhone();
+  Integer getNumberOfAdults();
+  Integer getNumberOfKids();
+  String getAddress();
+  String getCity();
+  String getState();
+  String getZipCode();
+  String getLocation();
+  List<Person> getPersonList();
 }
