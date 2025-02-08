@@ -1,11 +1,17 @@
 package br.dev.ferreiras.pantry_provisioning.services;
 
-import br.dev.ferreiras.pantry_provisioning.entities.Family;
 import br.dev.ferreiras.pantry_provisioning.dto.FamilyDTO;
+import br.dev.ferreiras.pantry_provisioning.dto.FamilyDataDTO;
+import br.dev.ferreiras.pantry_provisioning.entities.Family;
+import br.dev.ferreiras.pantry_provisioning.projections.FamilyDataProjection;
 import br.dev.ferreiras.pantry_provisioning.repositories.FamilyRepository;
+import br.dev.ferreiras.pantry_provisioning.services.exceptions.ResourceNotFoundException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Service
 public class FamilyService {
@@ -16,22 +22,50 @@ public class FamilyService {
     this.familyRepository = familyRepository;
   }
 
-  public Page<FamilyDTO> getAllFamilies(Pageable pageable) {
+  public List<FamilyDataDTO> getAllFamilies() {
 
-    Page<Family> families = familyRepository.findAll(pageable);
+    List<FamilyDataProjection> families = familyRepository.getFamilyData();
 
-    return families.map(this::entityToDTO);
+    List<FamilyDataDTO> result = new ArrayList<>();
+
+    for (FamilyDataProjection family : families) {
+      result.add(new FamilyDataDTO(
+          family.getId(),
+          family.getFamilyName(),
+          family.getContactEmail(),
+          family.getContactPhone(),
+          family.getNumberOfAdults(),
+          family.getNumberOfKids(),
+          family.getAddress(),
+          family.getCity(),
+          family.getState(),
+          family.getZipCode(),
+          family.getLocation())
+      );
+    }
+
+    return result;
   }
 
-  private FamilyDTO entityToDTO(Family family) {
 
-    return new FamilyDTO(
+
+  public FamilyDataDTO getFamilyById(Long id) {
+
+    Family check = familyRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Family not found!"));
+    FamilyDataProjection family = familyRepository.findFamilyDataById(id);
+
+    return new FamilyDataDTO(
+        family.getId(),
         family.getFamilyName(),
         family.getContactEmail(),
         family.getContactPhone(),
         family.getNumberOfAdults(),
-        family.getNumberOfKids()
+        family.getNumberOfKids(),
+        family.getAddress(),
+        family.getCity(),
+        family.getState(),
+        family.getZipCode(),
+        family.getLocation()
     );
-
   }
 }
