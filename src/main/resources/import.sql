@@ -17,3 +17,18 @@ INSERT INTO tb_home (family_id, created_at, update_at, address, city, state, zip
 INSERT INTO tb_home (family_id, created_at, update_at, address, city, state, zip_code, location) VALUES (4, '2024-01-04T12:00:00Z', '2024-01-04T14:00:00Z', '101 Maple Dr', 'Houston', 'TX', '77001', 'Urban');
 
 INSERT INTO tb_home (family_id, created_at, update_at, address, city, state, zip_code, location) VALUES (5, '2024-01-05T12:00:00Z', '2024-01-05T14:00:00Z', '202 Pine Rd', 'Miami', 'FL', '33101', 'Suburb');
+
+
+INSERT INTO tb_person (calories, dob, created_at, updated_at, family_id, email, first_name, last_name) VALUES (2431, '1967-03-11', '2024-01-02T12:00:00Z', '2024-01-02T14:00:00Z', 1, 'john.smith@example.com', 'John', 'Smith');
+INSERT INTO tb_person (calories, dob, created_at, updated_at, family_id, email, first_name, last_name) VALUES (2431, '1977-03-11', '2024-01-02T12:00:00Z', '2024-01-02T14:00:00Z', 1, 'mary.smith@example.com', 'Mary', 'Smith');
+
+INSERT INTO tb_person (calories, dob, created_at, updated_at, family_id, email, first_name, last_name) VALUES (1665, '1994-01-03', '2024-01-03T12:00:00Z', '2024-01-03T14:00:00Z', 2, 'emma.johnson@yahoo.com', 'Emma', 'Johnson');
+INSERT INTO tb_person (calories, dob, created_at, updated_at, family_id, email, first_name, last_name) VALUES (1665, '1984-01-03', '2024-01-03T12:00:00Z', '2024-01-03T14:00:00Z', 2, 'carl.johnson@yahoo.com', 'Carl', 'Johnson');
+
+
+INSERT INTO tb_person (calories, dob, created_at, updated_at, family_id, email, first_name, last_name) VALUES (2023, '1990-04-19', '2024-01-04T12:00:00Z', '2024-01-04T14:00:00Z', 3, 'sophia.williams@gmail.com', 'Sophia', 'Williams');
+
+INSERT INTO tb_person (calories, dob, created_at, updated_at, family_id, email, first_name, last_name) VALUES (1719, '1963-04-15', '2024-01-05T12:00:00Z', '2024-01-05T14:00:00Z',4, 'robert.brown@example.com', 'Robert', 'Brown');
+
+INSERT INTO tb_person (calories, dob, created_at, updated_at, family_id, email, first_name, last_name) VALUES (1684, '1991-08-27', '2024-01-06T12:00:00Z', '2024-01-06T14:00:00Z', 5, 'sophia.jones@gmail.com', 'Sophia', 'Jones');
+

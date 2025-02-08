@@ -1,13 +1,10 @@
 package br.dev.ferreiras.pantry_provisioning.services;
 
-import br.dev.ferreiras.pantry_provisioning.dto.FamilyDTO;
 import br.dev.ferreiras.pantry_provisioning.dto.FamilyDataDTO;
-import br.dev.ferreiras.pantry_provisioning.entities.Family;
+import br.dev.ferreiras.pantry_provisioning.entities.Person;
 import br.dev.ferreiras.pantry_provisioning.projections.FamilyDataProjection;
 import br.dev.ferreiras.pantry_provisioning.repositories.FamilyRepository;
 import br.dev.ferreiras.pantry_provisioning.services.exceptions.ResourceNotFoundException;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -27,9 +24,33 @@ public class FamilyService {
     List<FamilyDataProjection> families = familyRepository.getFamilyData();
 
     List<FamilyDataDTO> result = new ArrayList<>();
+      for (FamilyDataProjection family : families) {
+        result.add(new FamilyDataDTO(
+            family.getId(),
+            family.getFamilyName(),
+            family.getContactEmail(),
+            family.getContactPhone(),
+            family.getNumberOfAdults(),
+            family.getNumberOfKids(),
+            family.getAddress(),
+            family.getCity(),
+            family.getState(),
+            family.getZipCode(),
+            family.getLocation(),
+            family.getPersonList()
+            )
+        );
+      }
 
-    for (FamilyDataProjection family : families) {
-      result.add(new FamilyDataDTO(
+      return result;
+    }
+
+
+    public FamilyDataDTO getFamilyById (Long id){
+
+      familyRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Family not found!"));
+      FamilyDataProjection family = familyRepository.findFamilyDataById(id);
+      return new FamilyDataDTO(
           family.getId(),
           family.getFamilyName(),
           family.getContactEmail(),
@@ -40,32 +61,8 @@ public class FamilyService {
           family.getCity(),
           family.getState(),
           family.getZipCode(),
-          family.getLocation())
+          family.getLocation(),
+          family.getPersonList()
       );
     }
-
-    return result;
   }
-
-
-
-  public FamilyDataDTO getFamilyById(Long id) {
-
-    Family check = familyRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Family not found!"));
-    FamilyDataProjection family = familyRepository.findFamilyDataById(id);
-
-    return new FamilyDataDTO(
-        family.getId(),
-        family.getFamilyName(),
-        family.getContactEmail(),
-        family.getContactPhone(),
-        family.getNumberOfAdults(),
-        family.getNumberOfKids(),
-        family.getAddress(),
-        family.getCity(),
-        family.getState(),
-        family.getZipCode(),
-        family.getLocation()
-    );
-  }
-}
