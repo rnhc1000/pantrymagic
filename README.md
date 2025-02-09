@@ -1,5 +1,6 @@
-## _Full Pantry_ <br />
-This project has as goal to help families to generate a list of food to be purchased
+## _Pantry Provisioning_ <br />
+The goal of this project id to automate the provisioning process of a family house
+to help families to generate a complete list of food to be purchased
 based on their daily food consumption.
 ## _Table of contents_
 
@@ -25,7 +26,8 @@ The goal is to provide a series of endpoints to be consumed by a ReactJS-based f
 ## _Features_
 
 There are several features implemented such as authentication and authorization, data persistence, 
-paginated data recovery, consume external services of other apis, notification services authenticated access to endpoints and some other requirements.<br />
+paginated data recovery, consume external services of other apis, notification services, 
+authenticated access to endpoints and some other features.<br />
 <br />
 The app has been coded using Java 21, Spring Boot 3.4.2, Maven, Javadoc, Spring Security, Spring JPA, Spring Webflux,
 Flyway, Jackson, Lombok, OpenAPI, PostgreSQL, Docker and hosted in an AWS EC2 instance with secure access provided
@@ -61,21 +63,11 @@ by a NGINX SSL proxy reverse and being live at ..soon... <br />
 ## _Howto Build and Run_
 
   ```
-  - PostgreSQL Database : http://127.0.0.1:5432
-  - profile active: dev or prod
-  - service socket: 127.0.0.1:8095
+  - PostgreSQL Database : http://127.0.0.1:5432 (profile - prod)
+  - H2 Database: jdbc:h2:mem:pantrydb//localhost:8095 (profile - dev)
+  - profile active: dev 
+  - service socket: 127.0.0.1:8095/swagger-ui/index.html
   - tweak a few knobs to get it up and running
-  """
-  src.main.java.br.dev.ferreiras.pantry-provisioning.config.OpenApiConfiguration
-  ...
-  public class OpenApiConfiguration {
-  @Bean
-  public OpenAPI defineOpenApi() {
-    Server server = new Server();
-    -> server.setUrl("http://127.0.0.1:8095"); <-
-    server.setDescription("Development");
-   ....
-  """
   
   To have a docker image follow the instructions of the dockerBuild.sh,
   otherwise just Ctrl-Shift-F10 and voila...
@@ -83,8 +75,7 @@ by a NGINX SSL proxy reverse and being live at ..soon... <br />
 ```
 
 ## _Screenshot_
-
-<div><a rel='follow' href='https://www.houzz.co.uk/photos/aristokraft-cabinetry-supercabinet-transitional-kitchen-phvw-vp~139969183' target='_blank'><img src='https://st.hzcdn.com/simgs/pictures/kitchens/aristokraft-cabinetry-supercabinet-masterbrand-cabinets-inc-img~ae51d7b30c93d471_8-2370-1-484c26a.jpg' alt='' border=0 width='500' height='454' nopin='nopin' ondragstart='return false;' onselectstart='return false;' oncontextmenu='return false;'/></a></div><div style='color:#444;'><small><a style="text-decoration:none;color:#444;" href="https://www.houzz.co.uk/professionals/cabinet-makers/masterbrand-cabinets-pfvwus-pf~1291907285" target="_blank">Photo by MasterBrand Cabinets</a> - <a style="text-decoration:none;color:#444;" href="https://www.houzz.co.uk/photos/kitchen-ideas-and-designs-phbr0-bp~t_10135" target="_blank">Browse kitchen ideas</a></small></div>
+[![](./pantry-shopping.jpg)]()
 
 ## _Links_
 
@@ -92,12 +83,12 @@ by a NGINX SSL proxy reverse and being live at ..soon... <br />
 
 ## _Built with_
 
-[![My Skills](https://skillicons.dev/icons?i=java,spring,mysql,gradle,docker,redhat,aws,idea,git,github,)](https://skillicons.dev)
+[![My Skills](https://skillicons.dev/icons?i=java,spring,postgresql,maven,docker,rabbitmq,gmail,redhat,azure,idea,git,github,)](https://skillicons.dev)
 
 ## _Code Snippet_
 
 ```java
-import java.util.List;
+package br.dev.ferreiras.pantry_provisioning.controllers.contracts;
 
 /**
  * 
@@ -107,37 +98,22 @@ import java.util.List;
  *
  */
 
-@Configuration
-public class OpenApiConfiguration {
-  @Bean
-  public OpenAPI defineOpenApi() {
-    Server server = new Server();
-    server.setUrl("https://api.pantryprovisioning.dev.br/");
-    server.setDescription("Development");
+import br.dev.ferreiras.pantry_provisioning.dto.FamilyDataDTO;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.service.annotation.GetExchange;
+import org.springframework.web.service.annotation.HttpExchange;
 
-    Contact myContact = new Contact();
-    myContact.setName(":Ricardo Ferreira");
-    myContact.setEmail("ricardo@ferreiras.dev.br");
+import java.util.List;
 
-    Info information = new Info()
-            .title("Pantry Provisioning")
-            .version("1.0")
-            .description("Pantry Provisioning API exposes endpoints to generate a list of food items to be purchased based on the average consumption of a family")
-            .contact(myContact);
+@HttpExchange(value = "/pantry")
+public interface FamilyControllerContract {
 
-    return new OpenAPI()
-            .info(information)
-            .addSecurityItem(new SecurityRequirement().addList("bearerAuth"))
-            .components(
-                    new Components()
-                            .addSecuritySchemes("bearerAuth", new SecurityScheme()
-                                    .type(SecurityScheme.Type.HTTP)
-                                    .scheme("bearer")
-                                    .bearerFormat("JWT")
-                            )
-            )
-            .servers(List.of(server));
-  }
+  @GetExchange(value = "/families")
+  ResponseEntity<List<FamilyDataDTO>> getAllFamilies();
+
+  @GetExchange(value = "/families/{id}")
+  ResponseEntity<FamilyDataDTO> getFamilyById(@PathVariable Long id);
 }
 
 ``` 
