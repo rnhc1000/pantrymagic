@@ -1,7 +1,8 @@
 ## _Pantry Provisioning_ <br />
-The goal of this project id to automate the provisioning process of a family house
-to help families to generate a complete list of food to be purchased
-based on their daily food consumption.
+The goal of this project is to automate the provisioning process of a family house
+to help families to generate a complete list of food items such as proteins, vegetables, carbohydrates, dairy,
+seafood, etc to be purchased based on their daily food consumption.
+
 ## _Table of contents_
 
 - [_Overview_](#overview)
@@ -19,7 +20,7 @@ based on their daily food consumption.
 
 ## _Overview_
 
-This app is a Restful API built on top of Spring framework, PostgreSQL and Java. 
+This app is a RESTful API built on top of Spring framework, PostgreSQL and Java. 
 The goal is to provide a series of endpoints to be consumed by a ReactJS-based front-end app available at ...<soon> 
 <br />
 
