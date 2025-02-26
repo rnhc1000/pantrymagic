@@ -1,5 +1,6 @@
 package br.dev.ferreiras.pantry_provisioning.entities;
 
+import br.dev.ferreiras.pantry_provisioning.controllers.contracts.AuditableEntity;
 import jakarta.persistence.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.SourceType;
@@ -11,7 +12,7 @@ import java.util.Objects;
 
 @Entity
 @Table(name = "tb_family")
-public class Family {
+public class Family extends AuditableEntity {
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -28,17 +29,13 @@ public class Family {
   private Integer numberOfAdults;
   private Integer numberOfKids;
 
-  @OneToOne(mappedBy = "family", cascade = CascadeType.ALL)
+
+  @OneToMany(mappedBy = "family", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+  private List<Person> members;
+
+  @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+  @JoinColumn(name = "home_id", referencedColumnName = "id")
   private Home home;
-
-  @CreationTimestamp(source= SourceType.DB)
-  private Instant createdAt;
-
-  @UpdateTimestamp(source = SourceType.DB)
-  private Instant updatedAt;
-
-  @OneToMany(mappedBy = "family")
-  private List<Person> persons;
 
   public Family() {
   }
@@ -109,8 +106,8 @@ public class Family {
     this.home = home;
   }
 
-  public List<Person> getPersons() {
-    return persons;
+  public List<Person> getMembers() {
+    return members;
   }
 
   @Override
