@@ -77,6 +77,7 @@ by a NGINX SSL proxy reverse and being live at ..soon... <br />
 
 ## _Screenshot_
 [![](./pantry-shopping.jpg)]()
+Designed by <a href="https://www.freepik.com">Freepik</a>
 
 ## _Links_
 
@@ -140,4 +141,5 @@ public interface FamilyControllerContract {
 
 ## - _Portfolio_
 <a href="https://www.ferreiras.dev.br" target="_blank">My Portfolio...</a>
+
 

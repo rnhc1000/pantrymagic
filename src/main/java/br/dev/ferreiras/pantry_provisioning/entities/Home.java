@@ -1,5 +1,6 @@
 package br.dev.ferreiras.pantry_provisioning.entities;
 
+import br.dev.ferreiras.pantry_provisioning.controllers.contracts.AuditableEntity;
 import jakarta.persistence.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.SourceType;
@@ -10,7 +11,7 @@ import java.util.Objects;
 
 @Entity
 @Table(name = "tb_home")
-public class Home {
+public class Home extends AuditableEntity {
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -24,14 +25,7 @@ public class Home {
   private String zipCode;
   private String location;
 
-  @CreationTimestamp(source = SourceType.DB)
-  private Instant createdAt;
-
-  @UpdateTimestamp(source = SourceType.DB)
-  private Instant updateAt;
-
-  @OneToOne
-  @MapsId
+  @OneToOne(mappedBy = "home")
   private Family family;
 
   public Home() {

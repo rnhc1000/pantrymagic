@@ -2,6 +2,7 @@ package br.dev.ferreiras.pantry_provisioning.controllers;
 
 import br.dev.ferreiras.pantry_provisioning.controllers.contracts.FamilyControllerContract;
 import br.dev.ferreiras.pantry_provisioning.dto.FamilyDataDTO;
+import br.dev.ferreiras.pantry_provisioning.projections.FamilyDataProjection;
 import br.dev.ferreiras.pantry_provisioning.services.FamilyService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
@@ -21,9 +22,9 @@ public class FamilyController implements FamilyControllerContract {
    * @return all families persisted
    */
   @Override
-  public ResponseEntity<List<FamilyDataDTO>> getAllFamilies() {
+  public ResponseEntity<List<FamilyDataProjection>> getAllFamilies() {
 
-    return ResponseEntity.ok(familyService.getAllFamilies());
+    return ResponseEntity.ok(familyService.getAllMembers());
   }
 
   /**
@@ -31,7 +32,7 @@ public class FamilyController implements FamilyControllerContract {
    * @return FamilyDTO based on its id
    */
   @Override
-  public ResponseEntity<FamilyDataDTO> getFamilyById(Long id) {
+  public ResponseEntity<FamilyDataProjection> getFamilyById(Long id) {
 
     return ResponseEntity.ok(familyService.getFamilyById(id));
   }

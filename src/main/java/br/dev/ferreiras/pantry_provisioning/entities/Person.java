@@ -1,5 +1,6 @@
 package br.dev.ferreiras.pantry_provisioning.entities;
 
+import br.dev.ferreiras.pantry_provisioning.controllers.contracts.AuditableEntity;
 import jakarta.persistence.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.SourceType;
@@ -10,7 +11,7 @@ import java.time.LocalDate;
 
 @Entity
 @Table(name = "tb_person")
-public class Person {
+public class Person extends AuditableEntity {
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -18,33 +19,28 @@ public class Person {
 
   private String firstName;
   private String lastName;
-  private LocalDate doB;
+  private LocalDate dob;
   private String email;
   private Integer calories;
 
-  @ManyToOne
+  @ManyToOne(fetch = FetchType.LAZY)
   @JoinColumn(name = "family_id")
   private Family family;
 
-  @CreationTimestamp(source= SourceType.DB)
-  private Instant createdAt;
-
-  @UpdateTimestamp(source = SourceType.DB)
-  private Instant updatedAt;
   public Person() {
   }
 
-  public Person(Long id, String firstName, String lastName, LocalDate doB, String email, Integer calories, Family family) {
+  public Person(Long id, String firstName, String lastName, LocalDate dob, String email, Integer calories, Family family) {
     this.id = id;
     this.firstName = firstName;
     this.lastName = lastName;
-    this.doB = doB;
+    this.dob = dob;
     this.email = email;
     this.calories = calories;
     this.family = family;
   }
 
-  public Person(Long id, String firstName, String lastName, LocalDate doB, String email, Integer calories, Long id1) {
+  public Person(Long id, String firstName, String lastName, LocalDate dob, String email, Integer calories, Long id1) {
   }
 
   public Long getId() {
@@ -72,11 +68,11 @@ public class Person {
   }
 
   public LocalDate getDoB() {
-    return doB;
+    return dob;
   }
 
-  public void setDoB(LocalDate doB) {
-    this.doB = doB;
+  public void setDoB(LocalDate dob) {
+    this.dob = dob;
   }
 
   public String getEmail() {
